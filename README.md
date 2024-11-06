@@ -36,6 +36,6 @@ coding!
 
 - Isslem Ouederni: [GitHub](https://github.com/EslemOuederni) / [LinkedIn](https://www.linkedin.com/in/isslem-ouederni-858a13182/)
 - Mariana Farcas #2: [GitHub](https://github.com/MarianaFarcas) / [LinkedIn](https://linkedin.com/in/mariana-f-6592661b5)
-
+- Fouad Tabbara - Yay!
    ...
 - Teammate name #n: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)

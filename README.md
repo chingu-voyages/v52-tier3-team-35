@@ -39,3 +39,4 @@ coding!
 
    ...
 - Teammate name #n: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
+- Abdulsamad Yusuf : [GitHub](https://github.com/samad13) / [LinkedIn](www.linkedin.com/in/abdulsamad-yusuf-ba0064178)

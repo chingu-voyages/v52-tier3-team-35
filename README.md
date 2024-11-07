@@ -20,12 +20,14 @@ You may find these helpful as you work together to organize your project.
 - [Team Project Ideas](./docs/team_project_ideas.md)
 - [Team Decision Log](./docs/team_decision_log.md)
 
-Meeting Agenda templates (located in the `/docs` directory in this repo):
+> Meeting Agenda templates (located in the `/docs` directory in this repo):
 
-- Meeting - Voyage Kickoff --> ./docs/meeting-voyage_kickoff.docx
-- Meeting - App Vision & Feature Planning --> ./docs/meeting-vision_and_feature_planning.docx
-- Meeting - Sprint Retrospective, Review, and Planning --> ./docs/meeting-sprint_retrospective_review_and_planning.docx
-- Meeting - Sprint Open Topic Session --> ./docs/meeting-sprint_open_topic_session.docx
+| Meeting Agenda Templates                             | Link                                                                 |
+| ---------------------------------------------------- | -------------------------------------------------------------------- |
+| Meeting - Voyage Kickoff                             | [link](./docs/meeting-voyage_kickoff.docx)                           |
+| Meeting - App Vision & Feature Planning              | [link](./docs/meeting-vision_and_feature_planning.docx)              |
+| Meeting - Sprint Retrospective, Review, and Planning | [link](./docs/meeting-sprint_retrospective_review_and_planning.docx) |
+| Meeting - Sprint Open Topic Session                  | [link](./docs/meeting-sprint_open_topic_session.docx)                |
 
 ## Our Team
 
@@ -37,5 +39,13 @@ coding!
 - Isslem Ouederni #1: [GitHub](https://github.com/EslemOuederni) / [LinkedIn](https://www.linkedin.com/in/isslem-ouederni-858a13182/)
 - Mariana Farcas #2: [GitHub](https://github.com/MarianaFarcas) / [LinkedIn](https://linkedin.com/in/mariana-f-6592661b5)
 - Fouad Tabbara #3: - Yay!
-  ...
 - Anna Veselova #4: [GitHub](https://github.com/AnyaVeselova) / [LinkedIn](https://www.linkedin.com/in/anna-veselova-3640752a0/)
+  ...
+- Teammate name #n: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
+
+## Installation guide
+
+To install and run the next commands:
+`cd solar-friend`
+`npm i`
+`npm run dev`

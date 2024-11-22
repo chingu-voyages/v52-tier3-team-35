@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { bookingFormSchema } from "../../new/schema";
-import { useActionState, useRef, startTransition } from "react";
+import { useActionState, useRef, startTransition, useEffect } from "react";
 import onSubmitAction from "../../actions/onSubmitAction";
 import BookingFormField from "./BookingFormField";
 import { DateTimePickerForm } from "../TimeDatePicker/TimeDatePicker";
@@ -42,9 +42,11 @@ export default function BookingForm() {
     form.reset();
   };
 
-  if (state.bookingRef) {
-    router.push(`/bookings/${state.bookingRef}`);
-  }
+  useEffect(() => {
+    if (state.bookingRef && !isPending) {
+      router.push(`/bookings/${state.bookingRef}`);
+    }
+  }, [state.bookingRef, isPending, router]);
 
   return (
     <div className="w-96 border p-4 bg-slate-100 rounded-md">
@@ -74,11 +76,11 @@ export default function BookingForm() {
           <BookingFormField placeholder="State" name="state" disabled />
           <DateTimePickerForm />
           <div className="flex gap-1 justify-end mt-4">
-            <Button type="submit" disabled={form.formState.isSubmitting}>
-              Submit
-            </Button>
             <Button onClick={handleClearForm} variant="outline">
               Clear
+            </Button>
+            <Button type="submit" disabled={form.formState.isSubmitting}>
+              Submit
             </Button>
           </div>
         </form>

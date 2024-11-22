@@ -11,11 +11,12 @@ import onSubmitAction from "../../actions/onSubmitAction";
 import BookingFormField from "./BookingFormField";
 import { DateTimePickerForm } from "../TimeDatePicker/TimeDatePicker";
 import { useRouter } from "next/navigation";
+import LoadingModal from "@/app/components/modals/Loading";
 
 export type BookingFormData = z.infer<typeof bookingFormSchema>;
 
 export default function BookingForm() {
-  const [state, formAction] = useActionState(onSubmitAction, {
+  const [state, formAction, isPending] = useActionState(onSubmitAction, {
     message: "",
     bookingRef: undefined,
   });
@@ -47,6 +48,7 @@ export default function BookingForm() {
 
   return (
     <div className="w-96 border p-4 bg-slate-100 rounded-md">
+      {isPending && <LoadingModal />}
       <Form {...form}>
         <form
           className="space-y-4"

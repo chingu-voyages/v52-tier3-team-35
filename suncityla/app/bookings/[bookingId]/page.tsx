@@ -4,7 +4,6 @@ export default async function BookingConfirmed({
   params: Promise<{ bookingId: string }>;
 }) {
   const { bookingId } = await params;
-  console.log(bookingId);
 
   return (
     <div>

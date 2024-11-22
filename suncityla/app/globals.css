@@ -96,18 +96,6 @@ body {
   z-index: 2;
 }
 
-.hero-content h2 {
-  color: #fff648;
-}
-
-.hero-content .bookingBtn {
-  background-color: var(--btn-background);
-}
-
-.heading {
-  color: var(--heading-color);
-}
-
 .card {
   background-color: var(--card-background);
   color: var(--primary-color);

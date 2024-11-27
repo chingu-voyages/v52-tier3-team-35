@@ -1,4 +1,8 @@
+"use client";
+
 import { ColumnDef } from "@tanstack/react-table"
+import { BookingStatus } from "@prisma/client";
+import StatusDropdown from "./statusDropDown";
 
 export type BookingTableProps = {
     id: string;
@@ -8,7 +12,7 @@ export type BookingTableProps = {
     postalCode: string;
     state: string;
     bookingDate: Date;
-    status: "PENDING" | "CONFIRMED" | "CANCELLED" | "VISITED";
+    status: BookingStatus;
 };
 
 export const columns: ColumnDef<BookingTableProps>[] = [
@@ -39,5 +43,7 @@ export const columns: ColumnDef<BookingTableProps>[] = [
     {
         accessorKey: "status",
         header: "Status",
+        cell: (data) => <StatusDropdown id={data.row.original.id} currentStatus={data.row.original.status} />,
     },
+
 ];

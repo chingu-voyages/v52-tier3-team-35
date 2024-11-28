@@ -9,19 +9,21 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
+    maxAge: 1 * 30 * 30, // 30 minutes
   },
   pages: {
     signIn: "/admin/signin",
   },
   providers: [
     CredentialsProvider({
-      name: "Sign In",
+      name: 'Sign In',
       credentials: {
         username: { label: "Username", type: "text", placeholder: "JohnDoe" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
-        if (!credentials?.username || !credentials?.password) {
+      async authorize (credentials) {
+        if (!credentials?.username || !credentials?.password)
+        {
           return null;
         }
 
@@ -31,7 +33,8 @@ export const authOptions: NextAuthOptions = {
           },
         });
 
-        if (!existingAdmin) {
+        if (!existingAdmin)
+        {
           return null;
         }
         console.log(credentials.password, existingAdmin.password);
@@ -41,7 +44,8 @@ export const authOptions: NextAuthOptions = {
           existingAdmin.password
         );
 
-        if (!passwordMatch) {
+        if (!passwordMatch)
+        {
           return null;
         }
 
@@ -53,8 +57,9 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
+    async jwt ({ token, user }) {
+      if (user)
+      {
         return {
           ...token,
           username: user.username,
@@ -62,7 +67,7 @@ export const authOptions: NextAuthOptions = {
       }
       return token;
     },
-    async session({ session, token }) {
+    async session ({ session, token }) {
       return {
         ...session,
         user: {

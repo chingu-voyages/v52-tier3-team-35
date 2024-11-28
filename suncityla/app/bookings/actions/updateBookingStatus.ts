@@ -2,20 +2,22 @@
 
 import prisma from "@/prisma/prismaClient";
 import * as z from "zod";
-import {BookingStatus} from "@prisma/client";
+import { BookingStatus } from "@prisma/client";
 
 //schema for validation
 const updateStatusSchema = z.object({
-  Bookingid: z.string().uuid("Invalid booking ID"),
-  bookingStatus: z.nativeEnum(BookingStatus),
+    Bookingid: z.string().uuid("Invalid booking ID"),
+    bookingStatus: z.nativeEnum(BookingStatus),
 });
 
-const updateBookingStatus = async (Bookingid: string, bookingStatus:BookingStatus)=>{
-    const parsed = updateStatusSchema.safeParse({Bookingid, bookingStatus});
-    if(!parsed.success){
+const updateBookingStatus = async (Bookingid: string, bookingStatus: BookingStatus) => {
+    const parsed = updateStatusSchema.safeParse({ Bookingid, bookingStatus });
+    if (!parsed.success)
+    {
         throw new Error(parsed.error.issues[0].message);
     }
-    try{
+    try
+    {
         const booking = await prisma.booking.update({
             where: {
                 id: Bookingid,
@@ -25,7 +27,8 @@ const updateBookingStatus = async (Bookingid: string, bookingStatus:BookingStatu
             },
         });
         return booking;
-    } catch(error){
+    } catch (error)
+    {
         return error;
     }
 }

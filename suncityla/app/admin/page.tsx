@@ -7,10 +7,8 @@ import getBookings from "../bookings/actions/getBookings";
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminsPage ()
-{
+export default async function AdminsPage () {
   const bookings = await getBookings();
-  console.log(bookings)
   const session = await getServerSession(authOptions);
   if (!session || !session.user)
   {

@@ -1,8 +1,8 @@
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { DataTable } from "../components/data-table";
-import { columns } from "../components/columns";
+import { DataTable } from "../../components/data-table";
+import { columns } from "../../components/columns";
 import getBookings from "../bookings/actions/getBookings";
 
 export const dynamic = "force-dynamic";

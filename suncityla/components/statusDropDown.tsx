@@ -2,7 +2,7 @@
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useTransition } from "react";
-import updateBookingStatus from "../bookings/actions/updateBookingStatus";
+import updateBookingStatus from "../app/bookings/actions/updateBookingStatus";
 import { BookingStatus } from "@prisma/client";
 
 const StatusDropdown = ({
@@ -11,15 +11,12 @@ const StatusDropdown = ({
 }: {
     id: string;
     currentStatus: BookingStatus;
-}) =>
-{
+}) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [isPending, startTransition] = useTransition();
 
-    const handleStatusChange = (newStatus: BookingStatus) =>
-    {
-        startTransition(async () =>
-        {
+    const handleStatusChange = (newStatus: BookingStatus) => {
+        startTransition(async () => {
             const result = await updateBookingStatus(id, newStatus);
             if (result instanceof Error)
             {

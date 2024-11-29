@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { BookingStatus } from "@prisma/client";
 import StatusDropdown from "./statusDropDown";
+import { ArrowUpDown } from 'lucide-react';
 
 export type BookingTableProps = {
     id: string;
@@ -17,16 +18,24 @@ export type BookingTableProps = {
 
 export const columns: ColumnDef<BookingTableProps>[] = [
     {
-        accessorKey: "firstname",
-        header: "First Name",
-    },
-    {
-        accessorKey: "lastname",
-        header: "Last Name",
+        id: "fullname",
+        header: "Full Name",
+        accessorFn: (row) => `${row.firstname} ${row.lastname}`, // Combine first and last name
+        cell: ({ getValue }) => <span>{getValue() as string}</span>,
     },
     {
         accessorKey: "bookingDate",
-        header: "Booking Date",
+        header: ({ column }) => {
+            return (
+                <button
+                    className='inline-flex items-center'
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    <ArrowUpDown className="h-4 w-4" />
+                    Booking Date & Time
+                </button>
+            )
+        },
     },
     {
         accessorKey: "streetAddress",

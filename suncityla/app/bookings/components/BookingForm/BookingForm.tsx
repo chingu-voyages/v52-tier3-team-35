@@ -11,11 +11,11 @@ import onSubmitAction from "../../actions/onSubmitAction";
 import BookingFormField from "./BookingFormField";
 import { DateTimePickerForm } from "../TimeDatePicker/TimeDatePicker";
 import { useRouter } from "next/navigation";
-import LoadingModal from "@/app/components/modals/Loading";
+import LoadingModal from "@/components/modals/Loading";
 
 export type BookingFormData = z.infer<typeof bookingFormSchema>;
 
-export default function BookingForm() {
+export default function BookingForm () {
   const [state, formAction, isPending] = useActionState(onSubmitAction, {
     message: "",
     bookingRef: undefined,
@@ -43,7 +43,8 @@ export default function BookingForm() {
   };
 
   useEffect(() => {
-    if (state.bookingRef && !isPending) {
+    if (state.bookingRef && !isPending)
+    {
       router.push(`/bookings/${state.bookingRef}`);
     }
   }, [state.bookingRef, isPending, router]);
@@ -61,7 +62,8 @@ export default function BookingForm() {
             evt.preventDefault();
             form.handleSubmit(() => {
               startTransition(() => {
-                if (!formRef.current) {
+                if (!formRef.current)
+                {
                   throw Error("Form element not found");
                 }
                 formAction(new FormData(formRef.current));

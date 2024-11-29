@@ -6,6 +6,8 @@ import * as z from 'zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { useTransition } from 'react';
+import { Spinner } from '../ui/icon';
 
 // Define validation schema with Zod
 const AdminRegistrationSchema = z
@@ -24,7 +26,7 @@ const AdminRegistrationSchema = z
 
 type AdminRegistrationFormData = z.infer<typeof AdminRegistrationSchema>;
 
-export default function SignUpForm() {
+export default function SignUpForm () {
   const {
     register,
     handleSubmit,
@@ -38,6 +40,7 @@ export default function SignUpForm() {
     },
   });
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   const onSubmit = async (data: AdminRegistrationFormData) => {
     const response = await fetch('/api/auth', {
@@ -47,9 +50,13 @@ export default function SignUpForm() {
       },
       body: JSON.stringify(data),
     });
-    if (response.ok) {
-      router.push('/admin/signin');
-    } else {
+    if (response.ok)
+    {
+      startTransition(() => {
+        router.push('/admin/signin');
+      });
+    } else
+    {
       alert('An error occurred while registering');
     }
   };
@@ -100,6 +107,7 @@ export default function SignUpForm() {
           </Link>
         </h2>
       </div>
+      {isPending && <Spinner />}
     </form>
   );
 }

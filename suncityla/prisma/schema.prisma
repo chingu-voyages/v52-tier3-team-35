@@ -29,4 +29,5 @@ enum BookingStatus {
     PENDING
     CONFIRMED
     CANCELLED
+    VISITED
 }

@@ -7,4 +7,19 @@ const getAdmins = async () => {
   return await prisma.admin.findMany();
 };
 
-export default getAdmins;
+const pendingBookings = async () => {
+  return await prisma.booking.findMany({
+    where: {
+      status: "PENDING"
+    }
+  })
+}
+
+const cancelledBookings = async () => {
+  return await prisma.booking.findMany({
+    where: {
+      status: "CANCELLED"
+    }
+  })
+}
+export { getAdmins, pendingBookings, cancelledBookings };

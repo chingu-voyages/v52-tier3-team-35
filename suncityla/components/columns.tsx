@@ -36,6 +36,7 @@ export const columns: ColumnDef<BookingTableProps>[] = [
                 </button>
             )
         },
+        cell: ({ getValue }) => <span>{new Date(getValue() as string).toDateString()}</span>,
     },
     {
         accessorKey: "streetAddress",

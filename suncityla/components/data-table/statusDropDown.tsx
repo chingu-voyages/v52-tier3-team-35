@@ -17,7 +17,8 @@ const StatusDropdown = ({ id, currentStatus }: { id: string; currentStatus: Book
   const handleStatusChange = (newStatus: BookingStatus) => {
     startTransition(async () => {
       const result = await updateBookingStatus(id, newStatus);
-      if (result instanceof Error) {
+      if (result instanceof Error)
+      {
         console.error(result);
       }
     });
@@ -33,9 +34,8 @@ const StatusDropdown = ({ id, currentStatus }: { id: string; currentStatus: Book
           <DropdownMenuItem
             key={status}
             onClick={() => handleStatusChange(status)}
-            className={`cursor-pointer ${
-              status === currentStatus ? 'font-bold text-blue-500' : ''
-            }`}
+            className={`cursor-pointer ${status === "CANCELLED" ? "text-red-500" : status === "CONFIRMED" ? "text-green-500" : status === "PENDING" ? "text-yellow-500" : ""
+              }`}
           >
             {status}
           </DropdownMenuItem>

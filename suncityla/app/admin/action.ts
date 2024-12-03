@@ -22,4 +22,10 @@ const cancelledBookings = async () => {
     }
   })
 }
-export { getAdmins, pendingBookings, cancelledBookings };
+
+const getBookings = async () => {
+  const bookings = await prisma.booking.findMany();
+  return bookings;
+};
+
+export { getAdmins, pendingBookings, cancelledBookings, getBookings };

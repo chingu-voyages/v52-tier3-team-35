@@ -1,20 +1,21 @@
 import { authOptions } from '@/lib/auth';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
-import getBookings from './bookings/actions/getBookings';
+import { getBookings } from './action';
 import { cancelledBookings, pendingBookings } from './action';
-import { DataTable } from '../../components/data-table';
-import { columns } from '../../components/columns';
+import { DataTable } from '@/components/data-table/data-table';
+import { columns } from '@/components/data-table/columns';
 
 export const dynamic = 'force-dynamic';
 
-export default async function AdminsPage() {
+export default async function AdminsPage () {
   const bookings = await getBookings();
   const totalBookings = bookings.length;
   const pendingBooking = await pendingBookings();
   const cancelledBooking = await cancelledBookings();
   const session = await getServerSession(authOptions);
-  if (!session || !session.user) {
+  if (!session || !session.user)
+  {
     redirect('/admin/signin');
   }
   return (

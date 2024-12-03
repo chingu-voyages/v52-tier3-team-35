@@ -2,8 +2,8 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import { BookingStatus } from "@prisma/client";
-import StatusDropdown from "./statusDropDown";
 import { ArrowUpDown } from 'lucide-react';
+import StatusDropdown from './statusDropDown';
 
 export type BookingTableProps = {
     id: string;

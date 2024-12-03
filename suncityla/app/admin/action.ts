@@ -4,7 +4,7 @@ import prisma from "@/prisma/prismaClient";
 export const dynamic = "force-dynamic";
 
 const getAdmins = async () => {
-  return await prisma.admin.findMany();
+  return await prisma.user.findMany();
 };
 
 const pendingBookings = async () => {

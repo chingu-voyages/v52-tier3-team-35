@@ -62,7 +62,7 @@ export default function SignUpForm () {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="regForm">
+    <form onSubmit={handleSubmit(onSubmit)} className="form">
       <div>
         <label htmlFor="username">Username</label>
         <Input

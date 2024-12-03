@@ -1,5 +1,6 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GithubProvider from "next-auth/providers/github";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/prisma/prismaClient";
 import { compare } from "bcrypt";
@@ -15,6 +16,10 @@ export const authOptions: NextAuthOptions = {
     signIn: "/admin/signin",
   },
   providers: [
+    GithubProvider({
+      clientId: process.env.GITHUB_ID as string,
+      clientSecret: process.env.GITHUB_SECRET as string,
+    }),
     CredentialsProvider({
       name: 'Sign In',
       credentials: {
@@ -27,7 +32,7 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const existingAdmin = await prisma.admin.findUnique({
+        const existingAdmin = await prisma.user.findUnique({
           where: {
             username: credentials?.username,
           },
@@ -39,16 +44,17 @@ export const authOptions: NextAuthOptions = {
         }
         console.log(credentials.password, existingAdmin.password);
 
-        const passwordMatch = await compare(
-          credentials.password,
-          existingAdmin.password
-        );
-
-        if (!passwordMatch)
+        if (existingAdmin.password)
         {
-          return null;
+          const passwordMatch = await compare(
+            credentials.password,
+            existingAdmin.password
+          );
+          if (!passwordMatch)
+          {
+            return null;
+          }
         }
-
         return {
           id: existingAdmin.id,
           username: existingAdmin.username,
@@ -56,25 +62,4 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  callbacks: {
-    async jwt ({ token, user }) {
-      if (user)
-      {
-        return {
-          ...token,
-          username: user.username,
-        };
-      }
-      return token;
-    },
-    async session ({ session, token }) {
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          username: token.username,
-        },
-      };
-    },
-  },
 };

@@ -1,10 +1,8 @@
-import prisma from '@/prisma/prismaClient';
 import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 import HowItWorks from "../components/How It Works/HowItWorks";
 
 export default async function Home () {
-  console.log(await prisma.user.findMany());
   return (
     <>
       <Hero />

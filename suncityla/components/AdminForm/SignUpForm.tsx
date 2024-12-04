@@ -67,7 +67,7 @@ export default function SignUpForm () {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="form">
+    <form onSubmit={handleSubmit(onSubmit)} className=" flex flex-col gap-4 bg-[#7f95d1] pt-5 pb-5 px-10 my-5 w-4/5 h-auto md:w-1/3 rounded-md">
       <div>
         <label htmlFor="username">Username</label>
         <Input

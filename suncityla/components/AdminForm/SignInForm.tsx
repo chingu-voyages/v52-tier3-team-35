@@ -43,11 +43,9 @@ export default function SignInForm () {
             redirect: false,
         })
 
-        if (signInData?.error === "CredentialsSignin")
-        {
+        if (signInData?.error === "CredentialsSignin") {
             setAuthError("Invalid username or password")
-        } else
-        {
+        } else {
             startTransition(() => {
                 router.push("/admin")
                 router.refresh() // refresh page after transition
@@ -56,7 +54,7 @@ export default function SignInForm () {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className=" form">
+        <form onSubmit={handleSubmit(onSubmit)} className=" flex flex-col gap-4 bg-[#7f95d1] pt-5 pb-5 px-10 my-5 w-4/5 h-auto md:w-1/3 rounded-md">
             <div>
                 <label htmlFor="username">Username</label>
                 <Input

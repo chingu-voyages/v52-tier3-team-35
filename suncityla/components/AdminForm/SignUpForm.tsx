@@ -6,7 +6,7 @@ import * as z from 'zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import { Spinner } from '../ui/icon';
 
 // Define validation schema with Zod
@@ -41,6 +41,7 @@ export default function SignUpForm () {
   });
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const [errorMessage, setErrorMessage] = useState('');
 
   const onSubmit = async (data: AdminRegistrationFormData) => {
     const response = await fetch('/api/auth', {
@@ -50,14 +51,18 @@ export default function SignUpForm () {
       },
       body: JSON.stringify(data),
     });
-    if (response.ok)
-    {
+    if (response.ok) {
       startTransition(() => {
         router.push('/admin/signin');
       });
-    } else
-    {
-      alert('An error occurred while registering');
+    } else {
+      const result = await response.json();
+      console.error(result.message);
+      if (result.message === 'User already exists' && response.status === 400) {
+        setErrorMessage('Username already exists');
+      } else {
+        setErrorMessage('Something went wrong');
+      }
     }
   };
 
@@ -96,8 +101,9 @@ export default function SignUpForm () {
         {errors.confirmPassword && <p className="text-red-600">{errors.confirmPassword.message}</p>}
       </div>
       <Button type="submit" variant="default">
-        Register
+        Register {isPending && "..."}
       </Button>
+      {errorMessage && <p className="text-red-600">{errorMessage}</p>}
       <div>
         <h2 className="text-center">
           Do you already have an account?{' '}

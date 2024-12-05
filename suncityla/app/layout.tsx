@@ -31,7 +31,7 @@ export default async function RootLayout ({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div>
+        <div className="sm:w-full sm:mx-0 lg:container lg:mx-auto">
           <SessionProvider session={session}>
             <Navbar />
             {children}

@@ -1,7 +1,6 @@
 'use client';
 
 import { CopyToClipboard as ReactCopyToClipboard } from 'react-copy-to-clipboard';
-import { Button } from '../ui/button';
 import { Copy } from 'lucide-react';
 import { useEffect, useState } from 'react';
 

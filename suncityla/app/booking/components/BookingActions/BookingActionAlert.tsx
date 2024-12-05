@@ -1,3 +1,7 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -7,32 +11,45 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import onCancelBooking from '../../actions/onCancelBooking';
+import { useState } from 'react';
+import LoadingModal from '@/components/modals/Loading';
 
 export function BookingActionAlert({
   header,
   description,
-  TriggerButton,
-  onClose,
-  onContinue,
+  bookingId,
 }: {
   header: string;
   description: string;
-  TriggerButton: React.ReactNode;
-  onClose: () => void;
-  onContinue: () => void;
+  bookingId: string;
 }) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const router = useRouter();
+
+  const onContinue = async () => {
+    setIsLoading(true);
+    await onCancelBooking(bookingId);
+    router.push(`/booking/${bookingId}`);
+  };
+
+  if (isLoading) {
+    return <LoadingModal show />;
+  }
+
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>{TriggerButton}</AlertDialogTrigger>
+    <AlertDialog open>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{header}</AlertDialogTitle>
           <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={onClose}>No</AlertDialogCancel>
+          <Link href={`/booking/${bookingId}`}>
+            <AlertDialogCancel>No</AlertDialogCancel>
+          </Link>
           <AlertDialogAction
             onClick={onContinue}
             className="bg-destructive text-white font-bold hover:bg-destructive"

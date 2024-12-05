@@ -1,6 +1,5 @@
-'use client';
-
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,11 +9,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { EllipsisVertical } from 'lucide-react';
-import { BookingActionAlert } from './BookingActionAlert';
-import { useState } from 'react';
-import onCancelBooking from '@/app/booking/actions/onCancelBooking';
 import { BookingStatus } from '@prisma/client';
-import Link from 'next/link';
 
 const BookingActions = ({
   bookingId,
@@ -23,21 +18,10 @@ const BookingActions = ({
   bookingId: string;
   bookingStatus: BookingStatus;
 }) => {
-  const [open, setOpen] = useState(false);
-
-  const handleShowWarningModal = async () => {
-    setOpen(true);
-  };
-
-  const handleCancelBooking = async () => {
-    await onCancelBooking(bookingId);
-    setOpen(false);
-  };
-
   return (
-    <DropdownMenu open={open}>
+    <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" onClick={() => setOpen(!open)}>
+        <Button variant="ghost">
           <EllipsisVertical />
         </Button>
       </DropdownMenuTrigger>
@@ -49,21 +33,11 @@ const BookingActions = ({
             <DropdownMenuItem className="cursor-pointer">Amend</DropdownMenuItem>
           </Link>
         )}
-
-        <BookingActionAlert
-          header="Cancel booking"
-          description="Are you sure you want to cancel this booking?"
-          TriggerButton={
-            <DropdownMenuItem
-              className="text-destructive font-bold cursor-pointer hover:text-destructive"
-              onClick={handleShowWarningModal}
-            >
-              Cancel
-            </DropdownMenuItem>
-          }
-          onClose={() => setOpen(false)}
-          onContinue={handleCancelBooking}
-        />
+        <Link href={`${bookingId}/cancel`}>
+          <DropdownMenuItem className="text-destructive font-bold cursor-pointer hover:text-destructive">
+            Cancel
+          </DropdownMenuItem>
+        </Link>
       </DropdownMenuContent>
     </DropdownMenu>
   );

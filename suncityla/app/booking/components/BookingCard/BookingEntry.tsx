@@ -10,13 +10,15 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import BookingActions from '../BookingActions/BookingActions';
+import CopyToClipboard from '@/components/CopyToClipboard/CopyToClipboard';
 
 const BookingEntry = ({ booking }: { booking: Booking }) => {
   return (
     <div>
-      <div className="flex-row justify-center">
-        <div className=" mb-4 font-bold bg-yellow-200 border border-yellow-500 px-6 py-4 rounded-md">
-          Your booking reference is {booking.id}
+      <div className="flex-row justify-start">
+        <div className="flex items-center gap-1 mb-4 font-bold bg-yellow-200 border border-yellow-500 px-6 py-4 rounded-md">
+          <div>Your booking reference is {booking.id}</div>
+          <CopyToClipboard text={booking.id} />
         </div>
       </div>
       <Table>

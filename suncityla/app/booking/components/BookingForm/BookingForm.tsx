@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useRef, startTransition, useEffect } from 'react';
+import { useActionState, useRef, startTransition, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -14,7 +14,7 @@ import onSubmitAction from '@/app/booking/actions/onSubmitAction';
 import { bookingFormSchema } from '../../schemas/newBookingForm';
 import { Booking } from '@prisma/client';
 import TimeSelect from '../TimeSelect/TimeSelect';
-import availableTimes from '../TimeSelect/times';
+import createAvailableTimes from '../TimeSelect/times';
 
 export type BookingFormData = z.infer<typeof bookingFormSchema>;
 
@@ -34,16 +34,21 @@ export default function BookingForm({ booking }: { booking?: Booking | null }) {
       'street-address': booking?.streetAddress ?? '',
       'postal-code': booking?.postalCode ?? '',
       state: 'LA',
-      bookingDate: booking?.bookingDate.toISOString() ?? new Date().toISOString(),
-      bookingTime: booking?.bookingTime || availableTimes[0].time,
+      bookingDate: booking?.bookingDate.toISOString() || '',
       ...(state.fields ?? {}),
     },
   });
+
+  // Time Stamp
+  const [time, setSelectedTime] = useState<number | undefined>(booking?.bookingDate.getTime());
+  const watchDate = form.watch('bookingDate');
+  const availableTimes = createAvailableTimes(new Date(watchDate));
 
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleClearForm = () => {
     form.reset();
+    setSelectedTime(undefined);
   };
 
   useEffect(() => {
@@ -51,6 +56,16 @@ export default function BookingForm({ booking }: { booking?: Booking | null }) {
       router.push(`/booking/${state.bookingRef}`);
     }
   }, [state.bookingRef, isPending, router, state.message]);
+
+  useEffect(() => {
+    if (time) {
+      const newDateWithTime = new Date(watchDate);
+      const hours = new Date(time).getHours();
+      newDateWithTime.setHours(hours);
+      form.setValue('bookingDate', newDateWithTime.toISOString());
+      return;
+    }
+  }, [watchDate, time, form]);
 
   return (
     <div className="w-96 border p-4 bg-slate-100 rounded-md">
@@ -78,13 +93,21 @@ export default function BookingForm({ booking }: { booking?: Booking | null }) {
           <BookingFormField placeholder="Address" name="street-address" />
           <BookingFormField placeholder="Postcode" name="postal-code" />
           <BookingFormField placeholder="State" name="state" disabled />
-          <DateTimePickerForm />
-          <TimeSelect />
+          <DateTimePickerForm onChange={() => setSelectedTime(undefined)} />
+          {watchDate && (
+            <TimeSelect
+              selectedTime={time}
+              availableTimes={availableTimes}
+              onTimeSelect={setSelectedTime}
+            />
+          )}
           <div className="flex gap-1 justify-end mt-4">
-            <Button onClick={handleClearForm} variant="outline">
-              Clear
-            </Button>
-            <Button type="submit" disabled={form.formState.isSubmitting}>
+            {!booking?.id && (
+              <Button onClick={handleClearForm} variant="outline">
+                Clear
+              </Button>
+            )}
+            <Button type="submit" disabled={form.formState.isSubmitting || !time}>
               Submit
             </Button>
           </div>

@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { add, format } from 'date-fns';
 import { Booking } from '@prisma/client';
 import {
   Table,
@@ -40,8 +40,11 @@ const BookingEntry = ({ booking }: { booking: Booking }) => {
           <TableRow>
             <TableCell>{booking.firstname}</TableCell>
             <TableCell>{booking.lastname}</TableCell>
-            <TableCell>{format(new Date(booking.bookingDate), 'yyyy-MM-dd')}</TableCell>
-            <TableCell>{booking.bookingTime}</TableCell>
+            <TableCell>{format(new Date(booking.bookingDate), 'EE dd/MM/yy')}</TableCell>
+            <TableCell>{`${format(new Date(booking.bookingDate), 'h:mm a')} - ${format(
+              add(new Date(booking.bookingDate), { hours: 1 }),
+              'h:mm a',
+            )}`}</TableCell>
             <TableCell>{booking.streetAddress}</TableCell>
             <TableCell>{booking.postalCode}</TableCell>
             <TableCell>{booking.state}</TableCell>

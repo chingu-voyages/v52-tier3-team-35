@@ -31,6 +31,5 @@ export const bookingFormSchema = z.object({
       message: 'Booking date must be in the future.',
     },
   ),
-  bookingTime: z.string(),
   bookingId: z.string().optional(),
 });

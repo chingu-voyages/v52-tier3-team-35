@@ -1,25 +1,21 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { useState } from 'react';
+import { format } from 'date-fns';
+import { Calendar as CalendarIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
   FormControl,
   FormDescription,
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
+} from '@/components/ui/form';
 
-export function DateTimePickerForm() {
+export function DateTimePickerForm({ onChange }: { onChange: () => void }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -34,16 +30,12 @@ export function DateTimePickerForm() {
                   onClick={() => setOpen(true)}
                   variant="outline"
                   className={cn(
-                    "w-full justify-start font-normal",
-                    !field.value && "text-muted-foreground"
+                    'w-full justify-start font-normal',
+                    !field.value && 'text-muted-foreground',
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {field.value ? (
-                    format(field.value, "PPP")
-                  ) : (
-                    <span>Pick a date</span>
-                  )}
+                  {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
                 </Button>
               </PopoverTrigger>
             </FormControl>
@@ -54,17 +46,12 @@ export function DateTimePickerForm() {
                 onSelect={(date) => {
                   field.onChange(date?.toISOString());
                   setOpen(false);
+                  onChange();
                 }}
-                initialFocus
               />
             </PopoverContent>
           </Popover>
-          <input
-            type="hidden"
-            {...field}
-            name={field.name}
-            value={field.value}
-          />
+          <input type="hidden" {...field} name={field.name} value={field.value} />
           <FormDescription />
           <FormMessage />
         </FormItem>

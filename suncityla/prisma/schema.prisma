@@ -95,7 +95,6 @@ model Booking {
   postalCode    String
   state         String
   bookingDate   DateTime
-  bookingTime   String?
   status        BookingStatus @default(PENDING)
 }
 

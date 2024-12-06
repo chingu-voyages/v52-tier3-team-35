@@ -39,7 +39,6 @@ const onSubmitAction = async (prvState: FormState, data: FormData): Promise<Form
         state: parsed.data.state,
         postalCode: parsed.data['postal-code'],
         bookingDate: parsed.data.bookingDate,
-        bookingTime: parsed.data.bookingTime,
       },
     });
   } else {
@@ -51,7 +50,6 @@ const onSubmitAction = async (prvState: FormState, data: FormData): Promise<Form
         state: parsed.data.state,
         postalCode: parsed.data['postal-code'],
         bookingDate: parsed.data.bookingDate,
-        bookingTime: parsed.data.bookingTime,
       },
     });
   }

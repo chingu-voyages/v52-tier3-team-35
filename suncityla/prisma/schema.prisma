@@ -1,10 +1,10 @@
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 // This is an example schema. You can use it as a starting point to create your own schema.
@@ -17,21 +17,21 @@ generator client {
 // added this to ensure authentication with next-auth and github
 model User {
   id            String          @id @default(cuid())
-  username      String? @unique
+  username      String?         @unique
   password      String?
   name          String?
-  email         String?          @unique
+  email         String?         @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
- 
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
- 
+
 model Account {
   userId            String
   type              String
@@ -44,33 +44,33 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
- 
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
- 
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   @@id([provider, providerAccountId])
 }
- 
+
 model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
- 
+
 model VerificationToken {
   identifier String
   token      String
   expires    DateTime
- 
+
   @@id([identifier, token])
 }
- 
+
 // Optional for WebAuthn support
 model Authenticator {
   credentialID         String  @unique
@@ -81,26 +81,27 @@ model Authenticator {
   credentialDeviceType String
   credentialBackedUp   Boolean
   transports           String?
- 
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   @@id([userId, credentialID])
 }
 
 model Booking {
-    id            String        @id @unique @default(uuid())
-    firstname     String
-    lastname      String
-    streetAddress String
-    postalCode    String
-    state         String
-    bookingDate   DateTime
-    status        BookingStatus @default(PENDING)
+  id            String        @id @unique @default(uuid())
+  firstname     String
+  lastname      String
+  streetAddress String
+  postalCode    String
+  state         String
+  bookingDate   DateTime
+  bookingTime   String?
+  status        BookingStatus @default(PENDING)
 }
 
 enum BookingStatus {
-    PENDING
-    CONFIRMED
-    CANCELLED
-    VISITED
+  PENDING
+  CONFIRMED
+  CANCELLED
+  VISITED
 }

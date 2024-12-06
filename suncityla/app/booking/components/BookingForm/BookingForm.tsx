@@ -13,6 +13,8 @@ import LoadingModal from '@/components/modals/Loading';
 import onSubmitAction from '@/app/booking/actions/onSubmitAction';
 import { bookingFormSchema } from '../../schemas/newBookingForm';
 import { Booking } from '@prisma/client';
+import TimeSelect from '../TimeSelect/TimeSelect';
+import availableTimes from '../TimeSelect/times';
 
 export type BookingFormData = z.infer<typeof bookingFormSchema>;
 
@@ -33,6 +35,7 @@ export default function BookingForm({ booking }: { booking?: Booking | null }) {
       'postal-code': booking?.postalCode ?? '',
       state: 'LA',
       bookingDate: booking?.bookingDate.toISOString() ?? new Date().toISOString(),
+      bookingTime: booking?.bookingTime || availableTimes[0].time,
       ...(state.fields ?? {}),
     },
   });
@@ -76,6 +79,7 @@ export default function BookingForm({ booking }: { booking?: Booking | null }) {
           <BookingFormField placeholder="Postcode" name="postal-code" />
           <BookingFormField placeholder="State" name="state" disabled />
           <DateTimePickerForm />
+          <TimeSelect />
           <div className="flex gap-1 justify-end mt-4">
             <Button onClick={handleClearForm} variant="outline">
               Clear
